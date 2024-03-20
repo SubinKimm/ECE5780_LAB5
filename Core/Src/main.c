@@ -207,6 +207,16 @@ volatile int done = 0;
 	
 ////////////////////////////////////////////////////////////////////////////////////////
 
+//8-bit two data registers for X, Y axis
+	int8_t X1;
+	int8_t X2;
+	int8_t Y1;
+	int8_t Y2;
+	
+	//16-bit register for X, Y axis
+	int16_t X;
+	int16_t Y;
+	
 // Set/Initialize the L3GD20
 I2C2->CR2 |= (0x69 << 1); // set the S3GD20 slave address
 I2C2->CR2 &= ~(1 << 16); // transmit = 2
@@ -255,15 +265,7 @@ I2C2->CR2 |= (1 << 13); // set the start bit
 	
 	I2C2->CR2 |= (1 << 14) ; // STOP bit
 	
-	//8-bit two data registers for X, Y axis
-	int8_t X1;
-	int8_t X2;
-	int8_t Y1;
-	int8_t Y2;
 	
-	//16-bit register for X, Y axis
-	int16_t X;
-	int16_t Y;
 	
 	while(1) // Read and save the value of the X and Y axis data registers every 100ms
 	{
@@ -318,7 +320,7 @@ I2C2->CR2 |= (1 << 13); // set the start bit
 		}
 	}
 	
-	X1 = I2C2->RXDR; // Store X_L data
+	X1 = I2C2->RXDR; // Store X_L data to the X1
 	
 	while(1) // Wait RXNE flag is set
 	{
@@ -333,7 +335,7 @@ I2C2->CR2 |= (1 << 13); // set the start bit
 		}
 	}
 	
-	X2 = I2C2->RXDR; // Store X_H data
+	X2 = I2C2->RXDR; // Store X_H data to the X2
 	
 	while(1) // Wait TC flag is set
 	{
@@ -394,7 +396,7 @@ I2C2->CR2 |= (1 << 13); // set the start bit
 		}
 	}
 	
-	Y1 = I2C2->RXDR; // Store Y_L data
+	Y1 = I2C2->RXDR; // Store Y_L data to the Y1
 	
 	while(1) // Wait RXNE flag is set
 	{
@@ -409,7 +411,7 @@ I2C2->CR2 |= (1 << 13); // set the start bit
 		}
 	}
 	
-	Y2 = I2C2->RXDR; // Store Y_H data
+	Y2 = I2C2->RXDR; // Store Y_H data to the Y2
 	
 	while(1) // Wait TC flag is set
 	{
